@@ -22,22 +22,25 @@ public class Main extends StateBasedGame {
 
     public static void main(String[] args) throws SlickException {
         AppGameContainer app = new AppGameContainer(new Main("Deadly Marathon"));
-        app.setDisplayMode(800, 600, false);
+        app.setDisplayMode(1920, 1080, false);
         app.start();
     }
 
     private class PlayState extends BasicGameState {
 
         private Player player;
+        private Ground ground;
 
         @Override
         public void init(GameContainer container, StateBasedGame game) throws SlickException {
             player = new Player(400, 300, 0.2f, 20);
+            ground = new Ground(2000,100,0,1000);
         }
 
         @Override
         public void render(GameContainer container, StateBasedGame game, Graphics g) throws SlickException {
             player.render(g);
+            ground.render(g);
         }
 
         @Override
