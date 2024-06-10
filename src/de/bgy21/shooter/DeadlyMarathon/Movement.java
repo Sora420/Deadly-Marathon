@@ -3,15 +3,19 @@ package de.bgy21.shooter.DeadlyMarathon;
 import org.newdawn.slick.Input;
 
 public class Movement {
+
+    //Variablen
     protected float x, y;
     protected float speed;
 
+    //Construktor
     public Movement(float startX, float startY, float speed) {
         this.x = startX;
         this.y = startY;
         this.speed = speed;
     }
 
+    //Inputs werden in Movement umgewandelt
     public void move(Input input, int delta) {
         if (input.isKeyDown(Input.KEY_UP)) {
             y -= speed * delta;
@@ -27,6 +31,7 @@ public class Movement {
         }
     }
 
+    //Getter & Setter
     public float getX() {
         return x;
     }
