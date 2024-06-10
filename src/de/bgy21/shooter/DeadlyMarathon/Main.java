@@ -47,6 +47,8 @@ public class Main extends StateBasedGame {
         public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException {
             Input input = container.getInput();
             player.move(input, delta);
+
+
         }
 
         @Override
