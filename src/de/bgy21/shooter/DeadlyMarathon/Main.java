@@ -1,13 +1,8 @@
 package de.bgy21.shooter.DeadlyMarathon;
 
-import org.newdawn.slick.AppGameContainer;
-import org.newdawn.slick.GameContainer;
-import org.newdawn.slick.Graphics;
-import org.newdawn.slick.Input;
-import org.newdawn.slick.SlickException;
+import org.newdawn.slick.*;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
-
 
 public class Main extends StateBasedGame {
 
@@ -34,7 +29,7 @@ public class Main extends StateBasedGame {
         @Override
         public void init(GameContainer container, StateBasedGame game) throws SlickException {
             player = new Player(400, 300, 0.2f, 20);
-            ground = new Ground(2000,100,0,1000);
+            ground = new Ground(2000, 100, 0, 1000);
         }
 
         @Override
@@ -48,7 +43,10 @@ public class Main extends StateBasedGame {
             Input input = container.getInput();
             player.move(input, delta);
 
-
+            // Check for collision and adjust position
+            if (CollisionHandler.checkCollision(player, ground)) {
+                CollisionHandler.handleCollision(player, ground);
+            }
         }
 
         @Override

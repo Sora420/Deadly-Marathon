@@ -1,23 +1,22 @@
 package de.bgy21.shooter.DeadlyMarathon;
 
 import org.newdawn.slick.Graphics;
-
-import java.awt.*;
+import org.newdawn.slick.geom.Rectangle;
 
 public class Ground {
 
-    protected float groundWidth,groundHeight,groundX,groundY;
+    protected float groundWidth, groundHeight, groundX, groundY;
 
-
-    public Ground(float groundWidth, float groundHeight,float groundX, float groundY){
-       this.groundWidth = groundWidth;
-       this.groundHeight = groundHeight;
-       this.groundX = groundX;
-       this.groundY = groundY;
-
+    public Ground(float groundWidth, float groundHeight, float groundX, float groundY) {
+        this.groundWidth = groundWidth;
+        this.groundHeight = groundHeight;
+        this.groundX = groundX;
+        this.groundY = groundY;
     }
 
-    public void render(Graphics g) { g.fillRect(groundX,groundY,groundWidth,groundHeight);}
+    public void render(Graphics g) {
+        g.fillRect(groundX, groundY, groundWidth, groundHeight);
+    }
 
     public float getWidth() {
         return groundWidth;
@@ -35,19 +34,7 @@ public class Ground {
         return groundY;
     }
 
-    public void setWidth(float groundWidth) {
-        this.groundWidth = groundWidth;
-    }
-
-    public void setHeight(float groundHeight) {
-        this.groundHeight = groundHeight;
-    }
-
-    public void setX(float groundX) {
-        this.groundX = groundX;
-    }
-
-    public void setY(float groundY) {
-        this.groundY = groundY;
+    public Rectangle getBoundingBox() {
+        return new Rectangle(groundX, groundY, groundWidth, groundHeight);
     }
 }
