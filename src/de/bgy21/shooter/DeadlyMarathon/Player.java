@@ -20,7 +20,6 @@ public class Player extends Movement {
 
     //Player wird gerendert
     public void render(Graphics g) {
-        g.fillOval(x - radius, y - radius, radius * 2, radius * 2);
         g.drawImage(playerSprite, x - radius, y - radius);
     }
 
