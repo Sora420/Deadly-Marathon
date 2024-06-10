@@ -30,6 +30,7 @@ public class Main extends StateBasedGame {
         public void init(GameContainer container, StateBasedGame game) throws SlickException {
             player = new Player(400, 300, 0.2f, 20);
             ground = new Ground(2000, 100, 0, 1000);
+            player.draw();
         }
 
         @Override
