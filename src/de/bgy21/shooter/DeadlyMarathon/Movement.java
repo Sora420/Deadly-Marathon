@@ -1,3 +1,4 @@
+
 package de.bgy21.shooter.DeadlyMarathon;
 
 import org.newdawn.slick.Input;
@@ -28,6 +29,9 @@ public class Movement {
         }
         if (input.isKeyDown(Input.KEY_RIGHT)) {
             x += speed * delta;
+        }
+        if (input.isKeyPressed(Input.KEY_SPACE)){
+            y = y - 100;
         }
     }
 

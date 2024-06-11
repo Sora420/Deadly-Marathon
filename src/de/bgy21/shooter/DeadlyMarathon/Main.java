@@ -50,6 +50,8 @@ public class Main extends StateBasedGame {
             Input input = container.getInput();
             player.move(input, delta);
             player.fall();
+            System.out.println(player.getY());
+
 
 
             // Check for collision and adjust position

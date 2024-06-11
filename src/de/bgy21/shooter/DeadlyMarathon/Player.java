@@ -1,4 +1,5 @@
 
+
 package de.bgy21.shooter.DeadlyMarathon;
 
 import org.newdawn.slick.*;
@@ -36,9 +37,9 @@ public class Player extends Movement {
     //Methode für Gravitation des Spielers
     public void fall(){
 
-        //Variablen
+        //
         final int GRAVITY = 1;
-        final int TERMINAL_VELOCITY = 5;
+        final int TERMINAL_VELOCITY = 1;
         int vertical_speed = 1;
         int vertical_position = (int) getY();
 
