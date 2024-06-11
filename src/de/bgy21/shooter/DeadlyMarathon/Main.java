@@ -34,6 +34,7 @@ public class Main extends StateBasedGame {
             player = new Player(400, 300, 0.2f, 20);
             ground = new Ground(2000, 100, 0, 1000);
             player.draw();
+            ground.draw();
         }
 
         //Methode zum Rendern
@@ -48,13 +49,15 @@ public class Main extends StateBasedGame {
         public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException {
             Input input = container.getInput();
             player.move(input, delta);
+            player.fall();
+
 
             // Check for collision and adjust position
             if (CollisionHandler.checkCollision(player, ground)) {
                 CollisionHandler.handleCollision(player, ground);
             }
-        }
 
+        }
         @Override
         public int getID() {
             return 0;

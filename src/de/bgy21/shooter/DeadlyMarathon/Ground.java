@@ -1,12 +1,14 @@
 package de.bgy21.shooter.DeadlyMarathon;
 
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.*;
 import org.newdawn.slick.geom.Rectangle;
 
 public class Ground {
 
     //Variablen
     protected float groundWidth, groundHeight, groundX, groundY;
+    private Image groundSprite;
 
     //Construktor
     public Ground(float groundWidth, float groundHeight, float groundX, float groundY) {
@@ -17,8 +19,14 @@ public class Ground {
     }
 
     //Rendert den Boden
+    //TODO:Fix Ground Overlapping
     public void render(Graphics g) {
         g.fillRect(groundX, groundY, groundWidth, groundHeight);
+    }
+
+    //Methode um Sprite für den Boden aus zu geben
+    public void draw() throws SlickException {
+        groundSprite = new Image("src/de/bgy21/shooter/DeadlyMarathon/sprites/ground.png");
     }
 
     //Getter & Setter
