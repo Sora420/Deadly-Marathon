@@ -22,6 +22,7 @@ public class Ground {
     //TODO:Fix Ground Overlapping
     public void render(Graphics g) {
         g.fillRect(groundX, groundY, groundWidth, groundHeight);
+        //g.drawImage(groundSprite,groundX, groundY);
     }
 
     //Methode um Sprite für den Boden aus zu geben
