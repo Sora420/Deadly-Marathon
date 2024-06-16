@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="120" height="40" tilewidth="32" tileheight="32" infinite="0" nextlayerid="4" nextobjectid="1">
+ <tileset firstgid="1" source="Background_1.tsx"/>
+ <layer id="1" name="Background" width="120" height="40" visible="0" locked="1">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAACu3URY5UARiF0epFkLAIEgaNu4UB7hoGeOMS3N3d3d3d3bVxd98F4SygwrBS771/cKZf7uiW5nK5KlSlGtWpQU1qUZs61KUe9WlAQxrRmCaURqcoO81oTgta0orWtKEt7WhPBzrSic50oSvd6B6dou30pBe96UNf+tGfMgYwkEEMZghDGcZwRjAyOkXbSfr/RCf+OcudpP9PdOKfs9xJ+v9EJ/45y52k/0904p+z3En6/0Qn/jnLnaT/T3Tin7PcSfr/RCf+OcudpP9PdOKfs9xJ+v9EJ/45y52k/0904p+z3En6/0Qn/jnLnaT/T3T+3ykJqVYxpFrlkGpNQ6r1CKk2itGMYSzjGM8EJjKJyUxhKtOYzgxmMovZzGEu85jPgmjnbRd6+0IWsZglLGUZy1nBSlaxmjWsZR3r2cBGNrGZLWxlG9ujnbdd6O072MkudrOHvexjPwc4yCEOc4SjHOM4JzjJKU5zhrOci3bedqG3n+cCF7nEZa5wlWtc5wY3ucVt7nCXe9znAQ95xGPKeRLtvO1Cb3/KM57zgpe84jVveMs73vOBj3ziM1/4yje+84Of/OJ3tPO2C739T0i1vyHVKpSENKsUUu0fkRfdBgBLAAA=
+  </data>
+ </layer>
+ <layer id="2" name="Terrain" width="120" height="40">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAACu3DAQkAAAgDMA1hC/vHE3ucDVYFAAAAAAAAAAAAAAAAAAAAAJDpjD5t8jX6A4JvmQgASwAA
+  </data>
+ </layer>
+</map>
