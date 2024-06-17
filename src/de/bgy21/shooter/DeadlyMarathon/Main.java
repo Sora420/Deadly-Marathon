@@ -4,6 +4,7 @@ import org.newdawn.slick.*;
 import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
+import org.newdawn.slick.state.*;
 import org.newdawn.slick.tiled.TiledMap;
 
 public class Main extends StateBasedGame {
@@ -29,6 +30,9 @@ public class Main extends StateBasedGame {
 
         // Variablen
         private Player player;
+        private Star star;
+        private boolean starCollected = false;
+        int starCounter = 0;
 
         // Map dependencies
         private TiledMap map;
@@ -41,6 +45,7 @@ public class Main extends StateBasedGame {
         @Override
         public void init(GameContainer container, StateBasedGame game) throws SlickException {
             player = new Player(400, 300, 0.2f, 20);
+            star = new Star(200, 800, 20);
             player.draw();
 
             map = new TiledMap("res/Level_1.tmx", "res");
@@ -75,6 +80,12 @@ public class Main extends StateBasedGame {
             map.render(0, MAP_Y_OFFSET * map.getTileHeight());
 
             player.render(g);
+
+            if (!starCollected) {
+                star.render(g);
+            }
+
+            g.drawString("Star Counter: " + starCounter,150,250);
         }
 
         // Methode für Updates
@@ -90,6 +101,12 @@ public class Main extends StateBasedGame {
                     player,
                     collisionGrid[collisionCoordinates[0]][collisionCoordinates[1]],
                     collisionIds[collisionCoordinates[0] - MAP_Y_OFFSET +1][collisionCoordinates[1]]);
+
+            // Check for star collection
+            if (!starCollected && player.collectStar(star)) {
+                starCollected = true;
+                starCounter++;
+            }
         }
 
         @Override
