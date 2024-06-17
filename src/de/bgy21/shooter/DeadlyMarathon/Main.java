@@ -1,8 +1,7 @@
 package de.bgy21.shooter.DeadlyMarathon;
 
 import org.newdawn.slick.*;
-import org.newdawn.slick.state.BasicGameState;
-import org.newdawn.slick.state.StateBasedGame;
+import org.newdawn.slick.state.*;
 import org.newdawn.slick.tiled.TiledMap;
 
 public class Main extends StateBasedGame {
@@ -28,6 +27,9 @@ public class Main extends StateBasedGame {
         // Variablen
         private Player player;
         private Ground ground;
+        private Star star;
+        private boolean starCollected = false;
+        int starCounter = 0;
 
         // Map dependencies
         private TiledMap map;
@@ -39,6 +41,7 @@ public class Main extends StateBasedGame {
         public void init(GameContainer container, StateBasedGame game) throws SlickException {
             player = new Player(400, 300, 0.2f, 20);
             ground = new Ground(2000, 100, 0, 1000);
+            star = new Star(200, 800, 20);
             player.draw();
             ground.draw();
 
@@ -46,12 +49,15 @@ public class Main extends StateBasedGame {
             collisions = new int[map.getHeight()][map.getWidth()];
             terrainId = map.getLayerIndex("Terrain");
 
-            // populate collision map with terrain values (functions not optimized for runtime call...)
+            // populate collision map with terrain values
             for(int i = 0; i < collisions.length; ++i) {
                 for(int j = 0; j < collisions[i].length; ++j) {
-                    int tileId =map.getTileId(j, i, terrainId);
-                    if (map.getTileProperty(tileId, "blocked", "false").equals("true")) collisions[i][j] = 1;
-                    else collisions[i][j] = 0;
+                    int tileId = map.getTileId(j, i, terrainId);
+                    if (map.getTileProperty(tileId, "blocked", "false").equals("true")) {
+                        collisions[i][j] = 1;
+                    } else {
+                        collisions[i][j] = 0;
+                    }
                 }
             }
         }
@@ -60,9 +66,13 @@ public class Main extends StateBasedGame {
         @Override
         public void render(GameContainer container, StateBasedGame game, Graphics g) throws SlickException {
             map.render(0, -200);
-
             player.render(g);
-//            ground.render(g);
+            // ground.render(g);
+            if (!starCollected) {
+                star.render(g);
+            }
+
+            g.drawString("Star Counter: " + starCounter,150,250);
         }
 
         // Methode für Updates
@@ -76,6 +86,11 @@ public class Main extends StateBasedGame {
                 CollisionHandler.handleCollision(player, ground);
             }
 
+            // Check for star collection
+            if (!starCollected && player.collectStar(star)) {
+                starCollected = true;
+                starCounter++;
+            }
         }
 
         @Override

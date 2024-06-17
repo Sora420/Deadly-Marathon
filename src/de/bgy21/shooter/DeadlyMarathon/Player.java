@@ -1,8 +1,7 @@
 package de.bgy21.shooter.DeadlyMarathon;
 
 import org.newdawn.slick.*;
-import org.newdawn.slick.Graphics;
-import org.newdawn.slick.geom.Circle;
+import org.newdawn.slick.geom.*;
 
 public class Player extends Movement {
 
@@ -40,6 +39,11 @@ public class Player extends Movement {
     // Methode zum Landen des Spielers
     public void land(float groundY) {
         super.land(groundY);
+    }
+
+    // Methode zum Überprüfen der Kollision mit einem Star
+    public boolean collectStar(Star star) {
+        return getBoundingBox().intersects(star.getBoundingBox());
     }
 
     // Collision check für "Player" und "Ground"
