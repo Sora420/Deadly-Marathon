@@ -6,17 +6,30 @@ import org.newdawn.slick.geom.Rectangle;
 
 public class CollisionHandler {
 
-    // Checkt ob der Spieler "Ground" berührt
-    public static boolean checkCollision(Player player, Ground ground) {
-        Circle playerCircle = player.getBoundingBox();
-        Rectangle groundRect = ground.getBoundingBox();
-        return groundRect.intersects(playerCircle);
+    public static int[] checkCollision(Player player, Rectangle[][] collisionGrid) {
+        Circle playerCollision = player.getBoundingBox();
+
+        // Check tile player is on
+        for(int i = 0; i < collisionGrid.length; ++i) {
+            for(int j = 0; j < collisionGrid[i].length; ++j) {
+                if(collisionGrid[i][j].intersects(playerCollision)) {
+                    return new int[]{i, j};
+                }
+            }
+        }
+        return new int[]{-1, -1};
     }
 
-    // Simple collision handling for falling
-    public static void handleCollision(Player player, Ground ground) {
-        if (player.getY() + player.getBoundingBox().getRadius() > ground.getY()) {
-            player.land(ground.getY());
+    public static void handleCollision(Player player, Rectangle collisionTile, int collisionId) {
+        System.out.println(player.getY() + " " + collisionTile.getY() + " " + collisionId);
+        switch(collisionId) {
+            case 1:
+                if(player.getY() + player.getBoundingBox().getRadius() > collisionTile.getY()) {
+                    player.land(collisionTile.getY());
+                }
+                return;
+            default:
         }
     }
+
 }

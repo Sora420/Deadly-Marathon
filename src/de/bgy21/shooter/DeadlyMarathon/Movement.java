@@ -47,7 +47,7 @@ public class Movement {
     public void land(float groundY) {
         isJumping = false;
         yVelocity = 0;
-        y = groundY - 20; // Stellt sicher, dass der Spieler genau auf dem Boden landet
+        y = groundY + 20; // Stellt sicher, dass der Spieler genau auf dem Boden landet
     }
 
     // Getter & Setter

@@ -1,6 +1,9 @@
 package de.bgy21.shooter.DeadlyMarathon;
 
 import org.newdawn.slick.*;
+import org.newdawn.slick.geom.Rectangle;
+import org.newdawn.slick.state.BasicGameState;
+import org.newdawn.slick.state.StateBasedGame;
 import org.newdawn.slick.state.*;
 import org.newdawn.slick.tiled.TiledMap;
 
@@ -19,6 +22,7 @@ public class Main extends StateBasedGame {
     public static void main(String[] args) throws SlickException {
         AppGameContainer app = new AppGameContainer(new Main("Deadly Marathon"));
         app.setDisplayMode(1920, 1080, false);
+        app.setTargetFrameRate(120);
         app.start();
     }
 
@@ -26,38 +30,46 @@ public class Main extends StateBasedGame {
 
         // Variablen
         private Player player;
-        private Ground ground;
         private Star star;
         private boolean starCollected = false;
         int starCounter = 0;
 
         // Map dependencies
         private TiledMap map;
+        private final int MAP_Y_OFFSET = -6;
         private int terrainId;
-        private int[][] collisions; // 0 for empty, 1 for terrain
+        private int[][] collisionIds; // 0 for empty, 1 for terrain
+        private Rectangle[][] collisionGrid;
 
         // Methode zum Initialisieren
         @Override
         public void init(GameContainer container, StateBasedGame game) throws SlickException {
             player = new Player(400, 300, 0.2f, 20);
-            ground = new Ground(2000, 100, 0, 1000);
             star = new Star(200, 800, 20);
             player.draw();
-            ground.draw();
 
             map = new TiledMap("res/Level_1.tmx", "res");
-            collisions = new int[map.getHeight()][map.getWidth()];
+            collisionIds = new int[map.getHeight()][map.getWidth()];
+            collisionGrid = new Rectangle[map.getHeight()][map.getWidth()];
             terrainId = map.getLayerIndex("Terrain");
 
-            // populate collision map with terrain values
-            for(int i = 0; i < collisions.length; ++i) {
-                for(int j = 0; j < collisions[i].length; ++j) {
-                    int tileId = map.getTileId(j, i, terrainId);
-                    if (map.getTileProperty(tileId, "blocked", "false").equals("true")) {
-                        collisions[i][j] = 1;
-                    } else {
-                        collisions[i][j] = 0;
-                    }
+            // populate collisionID map with terrain values (functions not optimized for runtime call...)
+            for(int i = 0; i < collisionIds.length; ++i) {
+                for(int j = 0; j < collisionIds[i].length; ++j) {
+                    int tileId =map.getTileId(j, i, terrainId);
+                    if (map.getTileProperty(tileId, "blocked", "false")
+                            .equals("true")) collisionIds[i][j] = 1;
+                    else collisionIds[i][j] = 0;
+                }
+            }
+            // populate collision grid for detection where pawn is
+            for(int i = 0; i < collisionGrid.length; ++i) {
+                for(int j = 0; j < collisionGrid[i].length; ++j) {
+                    collisionGrid[i][j] = new Rectangle(
+                            1 + j*map.getTileWidth(),
+                            1 + i*map.getTileHeight(),
+                            map.getTileWidth(),
+                            map.getTileHeight());
                 }
             }
         }
@@ -65,9 +77,10 @@ public class Main extends StateBasedGame {
         // Methode zum Rendern
         @Override
         public void render(GameContainer container, StateBasedGame game, Graphics g) throws SlickException {
-            map.render(0, -200);
+            map.render(0, MAP_Y_OFFSET * map.getTileHeight());
+
             player.render(g);
-            // ground.render(g);
+
             if (!starCollected) {
                 star.render(g);
             }
@@ -81,10 +94,13 @@ public class Main extends StateBasedGame {
             Input input = container.getInput();
             player.move(input, delta);
 
-            // Check for collision and adjust position
-            if (CollisionHandler.checkCollision(player, ground)) {
-                CollisionHandler.handleCollision(player, ground);
-            }
+            // check for collision and adjust position
+            int[] collisionCoordinates = CollisionHandler.checkCollision(player, collisionGrid);
+            System.out.print(collisionCoordinates[0] + " " + collisionCoordinates[1] + " ");
+            CollisionHandler.handleCollision(
+                    player,
+                    collisionGrid[collisionCoordinates[0]][collisionCoordinates[1]],
+                    collisionIds[collisionCoordinates[0] - MAP_Y_OFFSET +1][collisionCoordinates[1]]);
 
             // Check for star collection
             if (!starCollected && player.collectStar(star)) {
